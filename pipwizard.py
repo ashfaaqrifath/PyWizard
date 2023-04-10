@@ -9,45 +9,59 @@ colorama.init(autoreset=True)
 os.system("cls")
 print()
 print(" " + Fore.BLACK + Back.YELLOW + " PIPWIZARD - Package Installer ")
-print(Fore.LIGHTBLACK_EX + " Copyright © 2023 Ashfaaq Rifath - PipWizard v1.2.0")
+print(Fore.LIGHTBLACK_EX + " Copyright © 2023 Ashfaaq Rifath - PipWizard v1.3.0")
 print('''
- (1) Install library
- (2) Upgrade library
- (3) Uninstall library''')
-option = input(Fore.CYAN + " Enter option: " + Style.RESET_ALL)
+ (1) Install package
+ (2) Upgrade package
+ (3) Uninstall package''')
 
-if option == "1":
-    print()
-    install_lib = input(Fore.CYAN + " Enter library name: " + Style.RESET_ALL)
-    try:
-        importlib.import_module(install_lib)
-        print(" " + Fore.BLACK + Back.GREEN + f" {install_lib} already installed ")
+while True:
+    option = input(Fore.CYAN + " Enter option: " + Style.RESET_ALL)
+    if option == "1":
         print()
-        input("Press Enter to exit...")
-    except ImportError:
-        subprocess.check_call(["pip", "install", install_lib])
-        print(" " + Fore.BLACK + Back.GREEN + f" {install_lib} has been installed ")
+        install_pkg = input(Fore.CYAN + " Enter package name: " + Style.RESET_ALL)
+
+        try:
+            importlib.import_module(install_pkg)
+            print(" " + Fore.BLACK + Back.GREEN + f" {install_pkg} already installed ")
+            print()
+            input("Press Enter to exit...")
+        except ImportError:
+            subprocess.check_call(["pip", "install", install_pkg])
+            print(" " + Fore.BLACK + Back.GREEN + f" Installed {install_pkg} ")
+            print()
+            input("Press Enter to exit...")
+        break
+
+    elif option == "2":
         print()
-        input("Press Enter to exit...")
+        upgrade_pkg = input(Fore.YELLOW + " Enter package name: " + Style.RESET_ALL)
 
-elif option == "2":
-    print()
-    upgrade_lib = input(Fore.YELLOW + " Enter library name: " + Style.RESET_ALL)
+        try:
+            subprocess.check_call(["pip", "install", "--upgrade", upgrade_pkg])
+            print(" " + Fore.BLACK + Back.GREEN + f" Upgraded {upgrade_pkg} ")
+            print()
+            input("Press Enter to exit...")
+        except subprocess.CalledProcessError:
+            print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
+            print()
+            input("Press Enter to exit...")
+        break
 
-    subprocess.check_call(["pip", "install", "--upgrade", upgrade_lib])
-    print(" " + Fore.BLACK + Back.GREEN + f" {upgrade_lib} has been upgraded ")
-    print()
-    input("Press Enter to exit...")
+    elif option == "3":
+        print()
+        uninstall_pkg = input(Fore.LIGHTRED_EX + " Enter package name: " + Style.RESET_ALL)
 
-elif option == "3":
-    print()
-    uninstall_lib = input(Fore.LIGHTRED_EX + " Enter library name: " + Style.RESET_ALL)
-
-    subprocess.check_call(["pip", "uninstall", uninstall_lib])
-    print(" " + Fore.BLACK  + Back.RED + f"{uninstall_lib} has been uninstalled ")
-    print()
-    input("Press Enter to exit...")
-else:
-    print(" " + Fore.BLACK  + Back.RED + " INVALID OPTION ")
-    print()
-    input("Press Enter to exit...")
+        try:
+            subprocess.check_call(["pip", "uninstall", uninstall_pkg])
+            print(" " + Fore.BLACK  + Back.RED + f" Unistalled {uninstall_pkg} ")
+            print()
+            input("Press Enter to exit...")
+        except subprocess.CalledProcessError:
+            print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
+            print()
+            input("Press Enter to exit...")
+        break
+    else:
+        print(" " + Fore.BLACK  + Back.RED + " INVALID OPTION ")
+        print()
