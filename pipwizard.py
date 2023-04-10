@@ -54,7 +54,7 @@ while True:
 
         try:
             subprocess.check_call(["pip", "uninstall", uninstall_pkg])
-            print(" " + Fore.BLACK  + Back.RED + f" Unistalled {uninstall_pkg} ")
+            print(" " + Fore.BLACK  + Back.RED + f" Uninstalled {uninstall_pkg} ")
             print()
             input("Press Enter to exit...")
         except subprocess.CalledProcessError:
