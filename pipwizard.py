@@ -8,7 +8,7 @@ colorama.init(autoreset=True)
 
 os.system("cls")
 print()
-print(" " + Fore.BLACK + Back.YELLOW + " PIPWIZARD - Package Installer ")
+print(" " + Fore.BLACK + Back.YELLOW + " PIPWIZARD - Package Manager ")
 print(Fore.LIGHTBLACK_EX + " Copyright © 2023 Ashfaaq Rifath - PipWizard v1.3.0")
 print('''
  (1) Install package
