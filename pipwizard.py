@@ -18,7 +18,7 @@ os.system("cls")
 print('''
  █▀▀█ ▀█▀ █▀▀█  █   █ ▀█▀  █▀▀▀█  █▀▀█  █▀▀█  █▀▀▄ 
  █▄▄█  █  █▄▄█  █ █ █  █   ▄▄▄▀▀  █▄▄█  █▄▄▀  █  █ 
- █    ▄█▄ █     █▄▀▄█ ▄█▄  █▄▄▄█  █  █  █  █  █▄▄▀ v1.5.1''')
+ █    ▄█▄ █     █▄▀▄█ ▄█▄  █▄▄▄█  █  █  █  █  █▄▄▀ v1.5.2''')
 print(Fore.YELLOW + "              PYTHON PACKAGE MANAGER")
 print('''
  (1) Install package
@@ -85,27 +85,29 @@ while True:
         try:
             subprocess.check_call(["pip", "uninstall", uninstall_pkg])
             print(" " + Fore.BLACK  + Back.RED + f" Uninstalled {uninstall_pkg} ")
-            print()
-            #input(" Press Enter to exit...")
         except subprocess.CalledProcessError:
             print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
             #input(" Press Enter to exit...")
         #break
 
     elif option == "5":
-        print()
-        print(Fore.YELLOW + " NOTE: Input package names in the requirements file." + Style.RESET_ALL)
-        print(Fore.RED + " Batch uninstalling packages..." + Style.RESET_ALL)
-        print()
+        confirm = input(Fore.LIGHTRED_EX + " Do you want to proceed? (Y/N): ")
+        if confirm == "y".lower():
+            print()
+            print(Fore.YELLOW + " NOTE: Input package names in the requirements file." + Style.RESET_ALL)
+            print(Fore.RED + " Batch uninstalling packages..." + Style.RESET_ALL)
+            print()
 
-        with open("requirements.txt") as f:
-            reqs = f.read().splitlines()
-        for pkg in reqs:
-            try:
-                subprocess.check_call(["pip", "uninstall", "-y", pkg])
-                print(" " + Fore.BLACK + Back.RED + f" Uinstalled {pkg} ")
-            except subprocess.CalledProcessError:
-                print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
+            with open("requirements.txt") as f:
+                reqs = f.read().splitlines()
+            for pkg in reqs:
+                try:
+                    subprocess.check_call(["pip", "uninstall", "-y", pkg])
+                    print(" " + Fore.BLACK + Back.RED + f" Uinstalled {pkg} ")
+                except subprocess.CalledProcessError:
+                    print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
+        else:
+            print(" " + Fore.BLACK  + Back.RED + " UNISTALLATION CANCELLED ")
 
     elif option == "6":
         print()
@@ -162,4 +164,4 @@ while True:
 
 
 
-# Copyright © 2023 Ashfaaq Rifath - PipWizard v1.5.1
+# Copyright © 2023 Ashfaaq Rifath - PipWizard v1.5.2
