@@ -1,6 +1,6 @@
-import importlib
 import os
 import subprocess
+import importlib
 import pkgutil
 
 if pkgutil.find_loader("colorama") is None:
@@ -12,20 +12,21 @@ from colorama import Fore, Back, Style
 colorama.init(autoreset=True)
 
 os.system("cls")
-print()
-print(" " + Fore.BLACK + Back.YELLOW + " PIPWIZARD - Package Manager ")
-print(Fore.LIGHTBLACK_EX + " Copyright © 2023 Ashfaaq Rifath - PipWizard v1.4.0")
+print('''
+ █▀▀█ ▀█▀ █▀▀█  █   █ ▀█▀  █▀▀▀█  █▀▀█  █▀▀█  █▀▀▄ 
+ █▄▄█  █  █▄▄█  █ █ █  █   ▄▄▄▀▀  █▄▄█  █▄▄▀  █  █ 
+ █    ▄█▄ █     █▄▀▄█ ▄█▄  █▄▄▄█  █  █  █  █  █▄▄▀ v1.5.0''')
+print(Fore.YELLOW + "              PYTHON PACKAGE MANAGER")
 print('''
  (1) Install package
- (2) Batch install
+ (2) Batch install from requirements file
  (3) Update package
  (4) Uninstall package
- (5) Batch uninstall
- (6) Check package status''')
+ (5) Batch uninstall from requirements file
+ (6) Check package status
+ (7) Display installed packages
+ (8) Save requirements file''')
 
-#------------------------------------------------------------------------------------------------
-package_list = ["pyperclip", "numpy", "colorama", "pytz"] #Enter packages you need to install
-#------------------------------------------------------------------------------------------------
 
 while True:
     option = input(Fore.CYAN + " Enter option: " + Style.RESET_ALL)
@@ -34,30 +35,30 @@ while True:
         install_pkg = input(Fore.CYAN + " Enter package name: " + Style.RESET_ALL)
 
         try:
-            importlib.import_module(install_pkg)
-            print(" " + Fore.BLACK + Back.GREEN + f" {install_pkg} already installed ")
-            print()
-            input(" Press Enter to exit...")
-        except ImportError:
             subprocess.check_call(["pip", "install", install_pkg])
             print(" " + Fore.BLACK + Back.GREEN + f" Installed {install_pkg} ")
+            print()
+            input(" Press Enter to exit...")
+        except subprocess.CalledProcessError:
+            print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
             print()
             input(" Press Enter to exit...")
         break
 
     elif option == "2":
         print()
-        print(Fore.YELLOW + " (●) Make sure package list is modified in the source code." + Style.RESET_ALL)
-        print(Fore.GREEN + " Batch installing packages..." + Style.RESET_ALL)
-        print()
+        print(Fore.YELLOW + " NOTE: Make sure requirements.txt is in this directory.")
+        print(Fore.GREEN + " Batch installing packages...")
 
-        for pkg in package_list:
+        with open("requirements.txt") as f:
+            reqs = f.read().splitlines()
+        for pkg in reqs:
             try:
                 subprocess.check_call(["pip", "install", pkg])
                 print(" " + Fore.BLACK + Back.GREEN + f" Installed {pkg} ")
                 print()
             except subprocess.CalledProcessError:
-                print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
+                print(" " + Fore.BLACK  + Back.RED + " AN ERROR OCCURED ")
                 print()
         input(" Press Enter to exit...")
         break
@@ -94,19 +95,22 @@ while True:
 
     elif option == "5":
         print()
-        print(Fore.YELLOW + " (●) Make sure package list is modified in the source code." + Style.RESET_ALL)
+        print(Fore.YELLOW + " NOTE: Input package names in the requirements file." + Style.RESET_ALL)
         print(Fore.RED + " Batch uninstalling packages..." + Style.RESET_ALL)
         print()
 
-        for pkg in package_list:
+        with open("requirements.txt") as f:
+            reqs = f.read().splitlines()
+        for pkg in reqs:
             try:
-                subprocess.check_call(["pip", "uninstall", pkg])
-                print(" " + Fore.BLACK + Back.RED + f" Uninstalled {pkg} ")
+                subprocess.check_call(["pip", "uninstall", "-y", pkg])
+                print(" " + Fore.BLACK + Back.RED + f" Uinstalled {pkg} ")
                 print()
             except subprocess.CalledProcessError:
                 print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
                 print()
         input(" Press Enter to exit...")
+        #os._exit(0)
         break
 
     elif option == "6":
@@ -123,6 +127,37 @@ while True:
             print()
             input(" Press Enter to exit...")
         break
+
+    elif option == "7":
+        print()
+        print(Fore.GREEN + " Displaying all installed packages...")
+
+        subprocess.check_call(["pip", "list"])
+        print()
+        input(" Press Enter to exit...")
+        break
+
+    elif option == "8":
+        print()
+        print(Fore.YELLOW + " NOTE: Copy this tool to the project folder ")
+        print(Fore.GREEN + " Saving project requirements to text file...")
+
+        try:
+            save = subprocess.run(["pip", "freeze"], stdout=subprocess.PIPE)
+            with open('requirements.txt', 'wb') as f:
+                f.write(save.stdout)
+
+            print(" " + Fore.BLACK  + Back.GREEN + " PROJECT REQUIREMENTS SAVED ")
+            print()
+            input(" Press Enter to exit...")
+        except subprocess.CalledProcessError:
+            print(" " + Fore.BLACK  + Back.RED + " AN ERROR OCCURED ")
+            print()
+            input(" Press Enter to exit...")
+        break
     else:
         print(" " + Fore.BLACK  + Back.RED + " INVALID OPTION ")
         print()
+
+
+# Copyright © 2023 Ashfaaq Rifath - PipWizard v1.5.0
