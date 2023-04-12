@@ -1,21 +1,24 @@
 import os
+import sys
 import subprocess
 import importlib
 import pkgutil
 
 if pkgutil.find_loader("colorama") is None:
     subprocess.check_call(["pip", "install", "colorama"])
+    #installs colorama automatically
 else:
     pass
 import colorama
 from colorama import Fore, Back, Style
 colorama.init(autoreset=True)
 
+#clears terminal
 os.system("cls")
 print('''
  █▀▀█ ▀█▀ █▀▀█  █   █ ▀█▀  █▀▀▀█  █▀▀█  █▀▀█  █▀▀▄ 
  █▄▄█  █  █▄▄█  █ █ █  █   ▄▄▄▀▀  █▄▄█  █▄▄▀  █  █ 
- █    ▄█▄ █     █▄▀▄█ ▄█▄  █▄▄▄█  █  █  █  █  █▄▄▀ v1.5.0''')
+ █    ▄█▄ █     █▄▀▄█ ▄█▄  █▄▄▄█  █  █  █  █  █▄▄▀ v1.5.1''')
 print(Fore.YELLOW + "              PYTHON PACKAGE MANAGER")
 print('''
  (1) Install package
@@ -25,10 +28,12 @@ print('''
  (5) Batch uninstall from requirements file
  (6) Check package status
  (7) Display installed packages
- (8) Save requirements file''')
+ (8) Save requirements file
+ (9) Exit''')
 
 
 while True:
+    print()
     option = input(Fore.CYAN + " Enter option: " + Style.RESET_ALL)
     if option == "1":
         print()
@@ -37,13 +42,11 @@ while True:
         try:
             subprocess.check_call(["pip", "install", install_pkg])
             print(" " + Fore.BLACK + Back.GREEN + f" Installed {install_pkg} ")
-            print()
-            input(" Press Enter to exit...")
+            #input(" Press Enter to exit...")
         except subprocess.CalledProcessError:
             print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
-            print()
-            input(" Press Enter to exit...")
-        break
+            #input(" Press Enter to exit...")
+        #break
 
     elif option == "2":
         print()
@@ -59,9 +62,8 @@ while True:
                 print()
             except subprocess.CalledProcessError:
                 print(" " + Fore.BLACK  + Back.RED + " AN ERROR OCCURED ")
-                print()
-        input(" Press Enter to exit...")
-        break
+        #input(" Press Enter to exit...")
+        #break
 
     elif option == "3":
         print()
@@ -70,13 +72,11 @@ while True:
         try:
             subprocess.check_call(["pip", "install", "--upgrade", update_pkg])
             print(" " + Fore.BLACK + Back.GREEN + f" Updated {update_pkg} ")
-            print()
-            input(" Press Enter to exit...")
+            #input(" Press Enter to exit...")
         except subprocess.CalledProcessError:
             print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
-            print()
-            input(" Press Enter to exit...")
-        break
+            #input(" Press Enter to exit...")
+        #break
 
     elif option == "4":
         print()
@@ -86,12 +86,11 @@ while True:
             subprocess.check_call(["pip", "uninstall", uninstall_pkg])
             print(" " + Fore.BLACK  + Back.RED + f" Uninstalled {uninstall_pkg} ")
             print()
-            input(" Press Enter to exit...")
+            #input(" Press Enter to exit...")
         except subprocess.CalledProcessError:
             print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
-            print()
-            input(" Press Enter to exit...")
-        break
+            #input(" Press Enter to exit...")
+        #break
 
     elif option == "5":
         print()
@@ -105,13 +104,8 @@ while True:
             try:
                 subprocess.check_call(["pip", "uninstall", "-y", pkg])
                 print(" " + Fore.BLACK + Back.RED + f" Uinstalled {pkg} ")
-                print()
             except subprocess.CalledProcessError:
                 print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
-                print()
-        input(" Press Enter to exit...")
-        #os._exit(0)
-        break
 
     elif option == "6":
         print()
@@ -120,22 +114,21 @@ while True:
         try:
             subprocess.check_call(["pip", "show", verify_pkg])
             print(" " + Fore.BLACK  + Back.GREEN + f" {verify_pkg} package exists ")
-            print()
-            input(" Press Enter to exit...")
+            #input(" Press Enter to exit...")
         except subprocess.CalledProcessError:
             print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
-            print()
-            input(" Press Enter to exit...")
-        break
+            #input(" Press Enter to exit...")
+        #break
 
     elif option == "7":
         print()
         print(Fore.GREEN + " Displaying all installed packages...")
-
         subprocess.check_call(["pip", "list"])
-        print()
-        input(" Press Enter to exit...")
-        break
+
+        # run pip list command and capture output
+        output = subprocess.check_output(["pip", "list"])
+        with open("packages.txt", "w") as f:
+            f.write(output.decode("utf-8"))
 
     elif option == "8":
         print()
@@ -146,18 +139,27 @@ while True:
             save = subprocess.run(["pip", "freeze"], stdout=subprocess.PIPE)
             with open('requirements.txt', 'wb') as f:
                 f.write(save.stdout)
-
             print(" " + Fore.BLACK  + Back.GREEN + " PROJECT REQUIREMENTS SAVED ")
-            print()
-            input(" Press Enter to exit...")
         except subprocess.CalledProcessError:
             print(" " + Fore.BLACK  + Back.RED + " AN ERROR OCCURED ")
-            print()
-            input(" Press Enter to exit...")
-        break
+
+    elif option == "help":
+        print('''
+ (1) Install package
+ (2) Batch install from requirements file
+ (3) Update package
+ (4) Uninstall package
+ (5) Batch uninstall from requirements file
+ (6) Check package status
+ (7) Display installed packages
+ (8) Save requirements file
+ (9) Exit''')
+
+    elif option == "9":
+        os._exit(0) #exits program
     else:
         print(" " + Fore.BLACK  + Back.RED + " INVALID OPTION ")
-        print()
 
 
-# Copyright © 2023 Ashfaaq Rifath - PipWizard v1.5.0
+
+# Copyright © 2023 Ashfaaq Rifath - PipWizard v1.5.1
