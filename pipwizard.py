@@ -18,7 +18,7 @@ os.system("cls")
 print('''
  █▀▀█ ▀█▀ █▀▀█  █   █ ▀█▀  █▀▀▀█  █▀▀█  █▀▀█  █▀▀▄ 
  █▄▄█  █  █▄▄█  █ █ █  █   ▄▄▄▀▀  █▄▄█  █▄▄▀  █  █ 
- █    ▄█▄ █     █▄▀▄█ ▄█▄  █▄▄▄█  █  █  █  █  █▄▄▀ v1.5.2''')
+ █    ▄█▄ █     █▄▀▄█ ▄█▄  █▄▄▄█  █  █  █  █  █▄▄▀ v1.5.3''')
 print(Fore.YELLOW + "              PYTHON PACKAGE MANAGER")
 print('''
  (1) Install package
@@ -29,7 +29,7 @@ print('''
  (6) Check package status
  (7) Display installed packages
  (8) Save requirements file
- (9) Exit''')
+ (9) Upgrade pip version''')
 
 
 while True:
@@ -145,6 +145,16 @@ while True:
         except subprocess.CalledProcessError:
             print(" " + Fore.BLACK  + Back.RED + " AN ERROR OCCURED ")
 
+    elif option == "9":
+        print()
+        print(Fore.GREEN + " Upgrading to new PIP version...")
+
+        try:
+            subprocess.run(["python", "-m", "pip", "install", "--upgrade", "pip"])
+            print(" " + Fore.BLACK  + Back.GREEN + " PIP VERSION UPGRADE SUCCESSFUL ")
+        except subprocess.CalledProcessError:
+            print(" " + Fore.BLACK  + Back.RED + " AN ERROR OCCURED ")
+
     elif option == "help":
         print('''
  (1) Install package
@@ -155,13 +165,13 @@ while True:
  (6) Check package status
  (7) Display installed packages
  (8) Save requirements file
- (9) Exit''')
+ (9) Upgrade pip version''')
 
-    elif option == "9":
+    elif option == "exit":
         os._exit(0) #exits program
     else:
         print(" " + Fore.BLACK  + Back.RED + " INVALID OPTION ")
 
 
 
-# Copyright © 2023 Ashfaaq Rifath - PipWizard v1.5.2
+# Copyright © 2023 Ashfaaq Rifath - PipWizard v1.5.3
