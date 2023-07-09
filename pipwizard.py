@@ -18,8 +18,10 @@ os.system("cls")
 print('''
  █▀▀█ ▀█▀ █▀▀█  █   █ ▀█▀  █▀▀▀█  █▀▀█  █▀▀█  █▀▀▄ 
  █▄▄█  █  █▄▄█  █ █ █  █   ▄▄▄▀▀  █▄▄█  █▄▄▀  █  █ 
- █    ▄█▄ █     █▄▀▄█ ▄█▄  █▄▄▄█  █  █  █  █  █▄▄▀ v1.5.3''')
+ █    ▄█▄ █     █▄▀▄█ ▄█▄  █▄▄▄█  █  █  █  █  █▄▄▀ v1.5.4''')
 print(Fore.YELLOW + "              PYTHON PACKAGE MANAGER")
+print()
+print(Fore.LIGHTBLACK_EX + "         Copyright © 2023 Ashfaaq Rifath")
 print('''
  (1) Install package
  (2) Batch install from requirements file
@@ -29,12 +31,13 @@ print('''
  (6) Check package status
  (7) Display installed packages
  (8) Save requirements file
- (9) Upgrade pip version''')
-
+ (9) Upgrade PIP version
+ (10) Check PIP version
+ (11) Check Python version''')
 
 while True:
     print()
-    option = input(Fore.CYAN + " Enter option: " + Style.RESET_ALL)
+    option = input(Fore.CYAN + " Select option: " + Style.RESET_ALL)
     if option == "1":
         print()
         install_pkg = input(Fore.CYAN + " Enter package name: " + Style.RESET_ALL)
@@ -61,7 +64,7 @@ while True:
                 print(" " + Fore.BLACK + Back.GREEN + f" Installed {pkg} ")
                 print()
             except subprocess.CalledProcessError:
-                print(" " + Fore.BLACK  + Back.RED + " AN ERROR OCCURED ")
+                print(" " + Fore.BLACK  + Back.RED + " ERROR OCCURRED ")
         #input(" Press Enter to exit...")
         #break
 
@@ -103,11 +106,11 @@ while True:
             for pkg in reqs:
                 try:
                     subprocess.check_call(["pip", "uninstall", "-y", pkg])
-                    print(" " + Fore.BLACK + Back.RED + f" Uinstalled {pkg} ")
+                    print(" " + Fore.BLACK + Back.RED + f" Uninstalled {pkg} ")
                 except subprocess.CalledProcessError:
                     print(" " + Fore.BLACK  + Back.RED + " PACKAGE NOT FOUND ")
         else:
-            print(" " + Fore.BLACK  + Back.RED + " UNISTALLATION CANCELLED ")
+            print(" " + Fore.BLACK  + Back.RED + " UNINSTALL CANCELLED ")
 
     elif option == "6":
         print()
@@ -143,7 +146,7 @@ while True:
                 f.write(save.stdout)
             print(" " + Fore.BLACK  + Back.GREEN + " PROJECT REQUIREMENTS SAVED ")
         except subprocess.CalledProcessError:
-            print(" " + Fore.BLACK  + Back.RED + " AN ERROR OCCURED ")
+            print(" " + Fore.BLACK  + Back.RED + " ERROR OCCURRED ")
 
     elif option == "9":
         print()
@@ -151,9 +154,19 @@ while True:
 
         try:
             subprocess.run(["python", "-m", "pip", "install", "--upgrade", "pip"])
-            print(" " + Fore.BLACK  + Back.GREEN + " PIP VERSION UPGRADE SUCCESSFUL ")
+            print(" " + Fore.BLACK  + Back.GREEN + " PIP version upgrade successful ")
         except subprocess.CalledProcessError:
-            print(" " + Fore.BLACK  + Back.RED + " AN ERROR OCCURED ")
+            print(" " + Fore.BLACK  + Back.RED + " ERROR OCCURRED ")
+
+    elif option == "10":
+        print()
+        print(Fore.GREEN + " Displaying PIP version")
+        subprocess.run(["pip", "--version"])
+
+    elif option == "11":
+        print()
+        print(Fore.GREEN + " Displaying Python version")
+        subprocess.run(["python", "--version"])
 
     elif option == "help":
         print('''
@@ -165,13 +178,9 @@ while True:
  (6) Check package status
  (7) Display installed packages
  (8) Save requirements file
- (9) Upgrade pip version''')
+ (9) Upgrade PIP version
+ (10) Check PIP version
+ (11) Check Python version''')
 
-    elif option == "exit":
-        os._exit(0) #exits program
     else:
         print(" " + Fore.BLACK  + Back.RED + " INVALID OPTION ")
-
-
-
-# Copyright © 2023 Ashfaaq Rifath - PipWizard v1.5.3
