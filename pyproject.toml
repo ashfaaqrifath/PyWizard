@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pydepmgr"
+version = "1.6.0"
+description = "A simple terminal-based Python dependency manager"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+authors = [
+    { name = "Ashfaaq Rifath" }
+]
+keywords = ["pip", "dependency-manager", "python", "cli", "requirements"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Software Development :: Build Tools"
+]
+
+dependencies = [
+    "colorama",
+    "questionary"
+]
+
+[project.scripts]
+pydepmgr = "pydepmgr.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ashfaaqrifath/pydepmgr"
+Repository = "https://github.com/ashfaaqrifath/pydepmgr"
